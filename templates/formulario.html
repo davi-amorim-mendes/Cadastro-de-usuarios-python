@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+</head>
+<body>
+    <div class="form cadastro">
+        <form id="cadastro" method="POST">
+            <legend id="titulo_form">Cadastro de Usuário</legend>
+            <label for="nome">Nome</label>
+            <input type="text" name="nome" id="nome" required>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+            <label id="label-idade" for="idade">Idade</label>
+            <input type="number" name="idade" id="idade" required>
+            <label id="label-cpf" for="cpf">CPF: </label>
+            <input type="text" name="cpf" id="cpf" maxlength="14" required>
+            <input class="butao" type="submit">
+        </form>
+        <form id="json" action="/json">
+            <input class="butao" type="submit" value="JSON">
+        </form>
+    </div>
+    <div class="form editar" style="display: none;">
+        <form id="editar_usuario" method="POST">
+            <legend id="titulo_form">Edite suas informações</legend>
+            <label for="nome">Nome</label>
+            <input type="text" name="nome-edit" id="nome-edit" required>
+            <label for="email">Email</label>
+            <input type="email" name="email-edit" id="email-edit" required>
+            <input class="butao" type="submit">
+        </form>
+    </div>
+    <div class="tabela">
+        <table>
+            <thead>
+                <tr id="cabeca">
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Idade</th>
+                    <th>CPF</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody id="corpo-tabela">
+                {% for usuario in usuarios %}
+                <tr id="linha-{{ usuario.id }}">
+                    <td>{{ usuario.nome }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.idade }}</td>
+                    <td>{{ usuario.cpf }}</td>
+                    <td>
+                        <button class="butao acao" id="excluir" onclick="excluir_usuario('{{usuario.id}}','{{usuario.cpf}}')"><i class="bi bi-trash-fill"></i></button>
+                        <button class="butao acao" id="editar" onclick="editar_usuario('{{usuario.id}}', '{{usuario.nome}}', '{{usuario.email}}')"><i class="bi bi-pencil-square"></i></button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+<script src="/static/js/remover_usuario.js"></script>
+<script src="/static/js/adicionar_usuario.js"></script>
+<script src="/static/js/editar_usuario.js"></script>
+</html>
